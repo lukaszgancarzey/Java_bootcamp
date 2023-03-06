@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 
 public class Main {
@@ -7,18 +9,17 @@ public class Main {
         do {
             System.out.println("Enter a number from 1 to 1000 ('END' to stop):");
             String str = input.nextLine();
-            if (str.equals("END")) {
-                break;
-            }
             int number = Integer.parseInt(str);
             try {
                 if (number >= 1 && number <= 1000) {
                     numbers.add(number);
+                } else if (str.equals("END")){
+                    break;
                 } else {
                     System.out.println("Invalid input");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Insert string value");
+                System.out.println("Insert number value");
             }
         } while (true);
         Collections.sort(numbers);
@@ -32,10 +33,10 @@ public class Main {
         List<Integer> sixth = new ArrayList<>();
         int sixthDecileCount = 0;
         int sum = 0;
-        int secoundDecileNumber = (int) numbers.get(Math.round(secoundDecile));
-        int thirdDecileNumber = (int) numbers.get(Math.round(thirdDecile));
-        int fifthDecileNumber = (int) numbers.get(Math.round(fifthDecile));
-        int sixthDecileNumber = (int) numbers.get(Math.round(sixthDecile));
+        int secoundDecileNumber = (int) numbers.get(secoundDecile);
+        int thirdDecileNumber = (int) numbers.get(thirdDecile);
+        int fifthDecileNumber = (int) numbers.get(fifthDecile);
+        int sixthDecileNumber = (int) numbers.get(sixthDecile);
         for(int i = 0; i < length - 1; i++) {
             sum += numbers.get(i);
             if(i > secoundDecileNumber - 1 && i <= thirdDecileNumber - 1) {
