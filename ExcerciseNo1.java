@@ -10,7 +10,7 @@ public class ExcerciseNo1 {
         String data;
         ArrayList<String> words = new ArrayList<String>();
         while (scan.hasNextLine()) {
-            data = scan.nextLine().toLowerCase();
+            data = scan.nextLine();
             words.add(data);
         }
         Collections.sort(words);
