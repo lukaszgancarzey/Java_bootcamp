@@ -33,11 +33,13 @@ interface MyInterface {
 @ScanMe
 class class1 implements MyInterface {
 
+    @Public
     @Override
     public String getId() {
         return null;
     }
 
+    @Public
     @Override
     public Integer sum(Integer a, Integer b) {
         return null;
@@ -48,6 +50,7 @@ class class1 implements MyInterface {
         return null;
     }
 
+    @Public
     @Override
     public Date calcDate3DaysAgo() {
         return null;
@@ -58,6 +61,7 @@ class class1 implements MyInterface {
         return null;
     }
 
+    @Public
     @Override
     public void someMethodWithoutReturnData() {
 
@@ -71,21 +75,27 @@ class class1 implements MyInterface {
 
 class class2 implements MyInterface {
 
+    @Public
     @Override
     public String getId() {
         return null;
     }
 
+    @Private
     @Override
     public Integer sum(Integer a, Integer b) {
         return null;
     }
 
+    @Public
+    @Private
     @Override
     public Double divide(Double a, Double B) throws Exception {
         return null;
     }
 
+    @Public
+    @Private
     @Override
     public Date calcDate3DaysAgo() {
         return null;
@@ -120,16 +130,20 @@ class class3 implements MyInterface {
         return null;
     }
 
+    @Private
     @Override
     public Double divide(Double a, Double B) throws Exception {
         return null;
     }
 
+    @Private
     @Override
     public Date calcDate3DaysAgo() {
         return null;
     }
 
+    @Public
+    @Private
     @Override
     public LocalTime avaysAdd3Hours(LocalDate inDate) {
         return null;
@@ -140,6 +154,7 @@ class class3 implements MyInterface {
 
     }
 
+    @Private
     @Override
     public void someMethodWithoutDataButHaveVariableNumbersOfArguments(String... varArgs) {
 
@@ -148,21 +163,25 @@ class class3 implements MyInterface {
 
 class class4 implements MyInterface {
 
+    @Public
     @Override
     public String getId() {
         return null;
     }
 
+    @Public
     @Override
     public Integer sum(Integer a, Integer b) {
         return null;
     }
 
+    @Private
     @Override
     public Double divide(Double a, Double B) throws Exception {
         return null;
     }
 
+    @Private
     @Override
     public Date calcDate3DaysAgo() {
         return null;
@@ -173,6 +192,8 @@ class class4 implements MyInterface {
         return null;
     }
 
+    @Public
+    @Private
     @Override
     public void someMethodWithoutReturnData() {
 
@@ -229,26 +250,24 @@ public class Main {
         System.out.println("Scanned classes:");
         for (MyInterface obj : myObjectsToScan) {
             Class<?> clazz = obj.getClass();
-            System.out.println("Class:");
-            if(clazz.isAnnotationPresent(ScanMe.class)) {
-                System.out.println("[ScanMe]");
-            }
-            System.out.println(clazz.getName());
-            List<String> annoList = new ArrayList<>();
-            List<String> methodsList = new ArrayList<>();
             Method[] methods = clazz.getDeclaredMethods();
-            for(Method method : methods) {
-                methodsList.add(method.getName());
-                if(method.isAnnotationPresent(Private.class) && method.isAnnotationPresent(Public.class)) {
-                    annoList.add("Private, Public");
-                } else if(method.isAnnotationPresent(Private.class)) {
-                    annoList.add("Private");
-                } else if(method.isAnnotationPresent(Public.class)){
-                    annoList.add("Public");
-                } else {
-                    annoList.add("");
-                }
+            String outPutString = new String("Class: ");
+            if(clazz.isAnnotationPresent(ScanMe.class)) {
+                outPutString += "[ScanMe] ";
             }
+            outPutString += clazz.getName() + " { ";
+            for(Method method : methods) {
+                if(method.isAnnotationPresent(Private.class) && method.isAnnotationPresent(Public.class)) {
+                    outPutString += "[Private, Public] ";
+                } else if(method.isAnnotationPresent(Private.class)) {
+                    outPutString += "[Private] ";
+                } else if(method.isAnnotationPresent(Public.class)){
+                    outPutString += "[Public] ";
+                }
+                outPutString += method.getName() + ", ";
+            }
+            outPutString += " }";
+            System.out.println(outPutString);
         }
     }
 }
